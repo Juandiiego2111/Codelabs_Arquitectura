@@ -1,0 +1,17 @@
+
+.data
+
+variable: .asciz "%d %d \r\n"
+
+.text
+.global _start
+.global main
+.extern printf     # Similar al include de C
+
+main:
+_start:
+
+    
+    subq $8, %rsp  # Alineamos los datos
+    
+   
