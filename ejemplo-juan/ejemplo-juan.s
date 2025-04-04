@@ -1,36 +1,29 @@
 
 section .data
-
-    mensaje: .asciz "%ld \n"
+    mensaje asciz "%d\n" # Mensaje de formato para imprimir un número entero con salto de línea
 
 section .text
-
-    .global main
-    .extern printf
+    global main
+    extern printf
 
 main:
-    subq $8, %rsp    # Alineación de datos
- 
-    movq $1, %rsi    # Inicializamos el contador en 1
-    movq $10, %rbx   # Valor límite
+_start:
+    mov rsi, 1          # Inicializamos el contador en 1
 
 loop:
-    cmp %rsi, %rbx   # Comparamos si ya imprimimos hasta 10
-    jg fin           # Si %rsi es mayor que 10, terminamos
+    cmp rsi, 11         # Comparamos si el contador llegó a 11
+    jge salir           # Si es mayor o igual a 11, salimos del bucle
 
-    movq $mensaje, %rdi  # Cargamos la dirección del mensaje
-    movq %rsi, %rsi      # Cargamos el número actual en %rsi
-    xorq %rax, %rax      # Limpiamos %rax para printf
-    call printf          # Llamamos a printf
+    mov rdi, mensaje    # Dirección del mensaje de formato
+    mov rdx, rsi        # Pasamos el número a imprimir
+    xor rax, rax        # Limpiamos rax para printf (0 registros flotantes)
+    call printf
 
-    inc %rsi             # Incrementamos el contador
-    jmp loop             # Repetimos el proceso
+    inc rsi             # Incrementamos el contador
+    jmp loop            # Volvemos al inicio del bucle
 
-fin:
-    addq $8, %rsp    # Restauramos la alineación de datos
-
-    # Salida del programa
-    movq $60, %rax   # Llamada a exit
-    xorq %rdi, %rdi  # Código de salida 0
-    syscall
+salir:
+    mov rax, 60         # Código de salida para syscall exit
+    xor rdi, rdi        # Código de salida 0
+    syscall             # Llamamos a syscall para salir
 

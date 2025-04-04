@@ -1,0 +1,20 @@
+
+
+.data
+uno: .float 1.0
+
+cero: .float 0.0
+
+
+.text
+.global compara_float
+
+# float comparar_float(float, float)
+# xm0   comparar_float(xm0 , xm1 ): xm0 > xm1?
+compara_float:
+    ucomiss %xmm1, %xmm0     # Compare como escalar float xmm0 con xmm1
+    ja mayor                 # xmm0 > xmm1
+menor:
+    movss cero, %xmm0        # xmm0 = cero
+    jmp fin
+

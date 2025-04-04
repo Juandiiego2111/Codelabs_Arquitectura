@@ -1,0 +1,17 @@
+
+
+.data
+uno: .float 1.0
+
+cero: .float 0.0
+
+
+.text
+.global compara_float
+
+# float comparar_float(float, float)
+# xmm0   comparar_float(xmm0 , xmm1 ): xmm0 > xmm1?
+compara_float:
+    # Compare los registros xmm0 y xmm1
+    ucomiss %xm %xmm1, %xmm0 
+ja mayo
